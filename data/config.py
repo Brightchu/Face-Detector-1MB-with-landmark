@@ -6,7 +6,7 @@ cfg_mnet = {
     'variance': [0.1, 0.2],
     'clip': False,
     'loc_weight': 2.0,
-    'gpu_train': True,
+    'gpu_train': False,
     'batch_size': 32,
     'ngpu': 1,
     'epoch': 250,

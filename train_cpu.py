@@ -55,7 +55,8 @@ img_dim = cfg['image_size']
 num_gpu = cfg['ngpu']
 batch_size = cfg['batch_size']
 max_epoch = cfg['epoch']
-gpu_train = cfg['gpu_train']
+# gpu_train = cfg['gpu_train']
+gpu_train = False
 
 num_workers = args.num_workers
 momentum = args.momentum
@@ -84,7 +85,8 @@ if args.resume_net is not None:
 if num_gpu > 1 and gpu_train:
     net = torch.nn.DataParallel(net).cuda()
 else:
-    net = net.cuda()
+    # net = net.cuda()
+    net = net.cpu()
 
 cudnn.benchmark = True
 
@@ -94,7 +96,8 @@ criterion = MultiBoxLoss(num_classes, 0.35, True, 0, True, 7, 0.35, False)
 priorbox = PriorBox(cfg, image_size=(img_dim, img_dim))
 with torch.no_grad():
     priors = priorbox.forward()
-    priors = priors.cuda()
+    # priors = priors.cuda()
+    priors = priors.cpu()
 
 
 def train():
@@ -131,8 +134,10 @@ def train():
 
         # load train data
         images, targets = next(batch_iterator)
-        images = images.cuda()
-        targets = [anno.cuda() for anno in targets]
+        # images = images.cuda()
+        # targets = [anno.cuda() for anno in targets]
+        images = images.cpu()
+        targets = [anno.cpu() for anno in targets]
 
         # forward
         out = net(images)
