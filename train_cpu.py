@@ -69,6 +69,7 @@ save_folder = args.save_folder
 if args.resume_net is not None:
     print('Loading resume network...')
     state_dict = torch.load(args.resume_net)
+    input("Press Enter to continue...")
     # create new OrderedDict that does not contain `module.`
     from collections import OrderedDict
 
@@ -176,4 +177,5 @@ def adjust_learning_rate(optimizer, gamma, epoch, step_index, iteration, epoch_s
 
 
 if __name__ == '__main__':
+    input("Press Enter to continue...")
     train()
